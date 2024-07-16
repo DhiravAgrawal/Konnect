@@ -130,6 +130,7 @@ export default function VideoMeetComponent() {
 
 
     }, [video, audio])
+
     let getMedia = () => {
         setVideo(videoAvailable);
         setAudio(audioAvailable);
@@ -424,7 +425,9 @@ export default function VideoMeetComponent() {
             ...prevMessages,
             { sender: sender, data: data }
         ]);
-        if (socketIdSender !== socketIdRef.current) {
+
+        
+        if (socketIdSender !== socketIdRef.current)     {
             setNewMessages((prevNewMessages) => prevNewMessages + 1);
         }
     };
@@ -444,21 +447,23 @@ export default function VideoMeetComponent() {
         setAskForUsername(false);
         getMedia();
     }
-
+    
+    
 
     return (
         <div>
 
             {askForUsername === true ?
 
-                <div>
+                <div className={styles.meetLobbyContainer}>
 
 
-                    <h2>Enter into Lobby </h2>
-                    <TextField id="outlined-basic" label="Username" value={username} onChange={e => setUsername(e.target.value)} variant="outlined" />
-                    <Button variant="contained" onClick={connect}>Connect</Button>
+                    <h2 style={{margin:"0.5rem"}}>Enter into Lobby </h2>
+                    <br />
+                    <TextField  style={{margin:"0.5rem"}} label="Username" value={username} onChange={e => setUsername(e.target.value)}/>
+                    <Button  style={{margin:"0.5rem"}} variant="contained" onClick={connect}>Connect</Button>
 
-
+<br />
                     <div>
                         <video ref={localVideoref} autoPlay muted></video>
                     </div>
@@ -479,10 +484,13 @@ export default function VideoMeetComponent() {
 
                                     console.log(messages)
                                     return (
-                                        <div style={{ marginBottom: "20px" }} key={index}>
+                                        <>
+                                        {/* // <div style={{ marginBottom: "10px" }} key={index}> */}
                                             <p style={{ fontWeight: "bold" }}>{item.sender}</p>
                                             <p>{item.data}</p>
-                                        </div>
+                                            <br />
+                                        {/* </div> */}
+                                        </>
                                     )
                                 }) : <p>No Messages Yet</p>}
 
@@ -490,7 +498,7 @@ export default function VideoMeetComponent() {
                             </div>
 
                             <div className={styles.chattingArea}>
-                                <TextField value={message} onChange={(e) => setMessage(e.target.value)} id="outlined-basic" label="Enter Your chat" variant="outlined" />
+                                <TextField style={{margin : "3px"}}value={message} onChange={(e) => setMessage(e.target.value)} id="outlined-basic" label="Enter Your chat" variant="outlined" />
                                 <Button variant='contained' onClick={sendMessage}>Send</Button>
                             </div>
 
